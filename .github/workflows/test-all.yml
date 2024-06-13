@@ -747,6 +747,7 @@ jobs:
       - name: Publish NPM
         shell: bash
         run: |
+          git config --global --add safe.directory /__w/react-native/react-native
           echo "GRADLE_OPTS = $GRADLE_OPTS"
           # We can't have a separate step because each command is executed in a separate shell
           # so variables exported in a command are not visible in another.
