@@ -803,6 +803,15 @@ if (rootProject.name == "react-native-build-from-source") {
         } else {
           file("$rootDir/../react-native-codegen")
         }
+    project.logger.error("""
+
+    🔋[react-native:ReactAndroid:build.gradle.kts]🔋
+    - $rootDir../@react-native/codegen exists → ${file("$rootDir/../@react-native/codegen").exists()}
+    - file("\$rootDir/../@react-native/codegen") → ${file("$rootDir/../@react-native/codegen").path}
+    - file("\$rootDir/../react-native-codegen") → ${file("$rootDir/../react-native-codegen").path}
+    - reactNativeDir → ${file("$rootDir").path}
+
+    """.trimIndent())
     reactNativeDir = file("$rootDir")
   }
 }
