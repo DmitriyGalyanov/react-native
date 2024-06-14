@@ -80,6 +80,28 @@ type OptionalProps = {|
    * this for debugging purposes. Defaults to false.
    */
   disableVirtualization?: ?boolean,
+
+  /**
+   * enables extra logs in _onScroll if provided
+   */
+  debugName?: string
+  /**
+   * required for _transformed_ (to windows' top / `y: 0`)
+   * _nested_ with same orientation Lists
+   *
+   * makes `FlatList.measureLayoutRelativeToContainingList` **NOT** set
+   * `FlatList._offsetFromParentVirtualizedList`
+   */
+  shouldIgnoreOffsetFromParentVirtualizedList?: boolean,
+  /**
+   * required to ignore Mirage-Scroll Events
+   * emitting at Navigation (and possibly more)
+   *
+   * (child List may be scrolled to different Offset,
+   * in such Case Scroll from Parent will trigger incorrect Cells Update)
+   */
+  shouldIgnoreOnScrollEventFromParentList?: boolean,
+
   /**
    * A marker property for telling the list to re-render (since it implements `PureComponent`). If
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the

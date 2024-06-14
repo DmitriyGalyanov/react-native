@@ -1494,6 +1494,11 @@ class ScrollView extends React.Component<Props, State> {
   _handleStartShouldSetResponderCapture: (e: PressEvent) => boolean = (
     e: PressEvent,
   ) => {
+    const res = this.props.passOnStartShouldSetResponderCaptureToInnerScrollView
+      ? this.props.onStartShouldSetResponderCapture?.()
+      : undefined;
+    if (res) return res;
+
     // The scroll view should receive taps instead of its descendants if:
     // * it is already animating/decelerating
     if (this._isAnimating()) {

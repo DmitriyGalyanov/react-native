@@ -698,6 +698,12 @@ export interface ScrollViewProps
     | undefined;
 
   /**
+   * makes {@linkcode ScrollView['_handleStartShouldSetResponderCapture']} 
+   * consider passed {@linkcode onStartShouldSetResponderCapture}
+   */
+  passOnStartShouldSetResponderCaptureToInnerScrollView?: boolean
+
+  /**
    * When true the scroll view stops on multiples of the scroll view's size
    * when scrolling. This can be used for horizontal pagination. The default
    * value is false.

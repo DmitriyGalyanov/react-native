@@ -149,6 +149,28 @@ export interface VirtualizedListProps<ItemT>
 
 export interface VirtualizedListWithoutRenderItemProps<ItemT>
   extends ScrollViewProps {
+
+  /**
+   * enables extra logs in _onScroll if provided
+   */
+  debugName?: string
+  /**
+   * required for _transformed_ (to windows' top / `y: 0`)
+   * _nested_ with same orientation Lists
+   *
+   * makes `FlatList.measureLayoutRelativeToContainingList` **NOT** set
+   * `FlatList._offsetFromParentVirtualizedList`
+   */
+  shouldIgnoreOffsetFromParentVirtualizedList?: boolean;
+  /**
+   * required to ignore Mirage-Scroll Events
+   * emitting at Navigation (and possibly more)
+   *
+   * (child List may be scrolled to different Offset,
+   * in such Case Scroll from Parent will trigger incorrect Cells Update)
+   */
+  shouldIgnoreOnScrollEventFromParentList?: boolean;
+
   /**
    * Rendered in between each item, but not at the top or bottom
    */

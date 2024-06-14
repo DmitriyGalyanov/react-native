@@ -1390,7 +1390,11 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       this._scrollRef.measureLayout(
         this.context.getOutermostParentListRef().getScrollRef(),
         (x, y, width, height) => {
-          this._offsetFromParentVirtualizedList = this._selectOffset({x, y});
+          const { shouldIgnoreOffsetFromParentVirtualizedList } = this.props
+          this._offsetFromParentVirtualizedList =
+            shouldIgnoreOffsetFromParentVirtualizedList
+              ? 0
+              : this._selectOffset({ x, y })
           this._scrollMetrics.contentLength = this._selectLength({
             width,
             height,
@@ -1686,9 +1690,19 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     };
   };
 
-  _onScroll = (e: Object) => {
+  _onScroll = (e: Object, isFromParentList: boolean) => {
+    const { shouldIgnoreOnScrollEventFromParentList, debugName } = this.props
+
+    const logTag = `VirtualizedList._onScroll(debugName: ${debugName}, offsetY: ${e.nativeEvent.contentOffset.y}, isFromParentList: ${isFromParentList}, shouldIgnoreOnScrollEventFromParentList: ${shouldIgnoreOnScrollEventFromParentList})`
+    debugName && console.log(logTag)
+
+    if (isFromParentList && shouldIgnoreOnScrollEventFromParentList) {
+      debugName && console.log(`${logTag} | isFromParentList and shouldIgnoreOnScrollEventFromParentList are truthy, aborting`)
+      return
+    }
+
     this._nestedChildLists.forEach(childList => {
-      childList._onScroll(e);
+      childList._onScroll(e, true);
     });
     if (this.props.onScroll) {
       this.props.onScroll(e);
